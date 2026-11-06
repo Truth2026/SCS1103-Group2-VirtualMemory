@@ -12,7 +12,7 @@ Precious Memory Charamba  N02647137Y  Research
 
 Tawana Macheka          N02643436W  Presenting
 
-Carol Kachale           N0265210Y   Presenting
+Carol Kachale          N02645210Y   Presenting
 
 Sibusisiwe Ndowana     N02649564C     Research
 
@@ -20,11 +20,11 @@ Shoko Ezra            N02646251D      Build
 
 Kuzakwawo Lesean       N02653121A      Build
 
-Promise James         N02645998Y       Build
+Promise James         N02645998x       Build
 
 Rutendo Murambiwa     N02646586H     Research
 
-Elina Muraidza         N02646369M     Research
+Elina Maraidza         N02646369M     Research
 
 Kuzhumbwa Tatenda     N02653651W      Writing
 
