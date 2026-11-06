@@ -1,65 +1,78 @@
 # What Stays in RAM? Page Replacement for a Low-Memory Server
 
-**SCS 1103 - Group 2**
+**SCS 1103 Operating System Concepts, Assignment 1 | Group 2**
 
 https://github.com/n02646251d-png/SCS1103-Group2-VirtualMemory
 
-Group members and roles
+## Group members and roles
 
-NAME                        Reg no       Plan 
+| # | Name | Reg no. | Role |
+| --- | --- | --- | --- |
+| 1 | Precious Memory Charamba | N02647137Y | Research |
+| 2 | Sibusisiwe Ndawana | N02649564C | Research |
+| 3 | Rutendo Murambiwa | N02646586H | Research |
+| 4 | Elina Maraidza | N02646369M | Research |
+| 5 | Miracle Mazulu | N02644912Y | Research |
+| 6 | Tawana Macheka | N02643436W | Presenting |
+| 7 | Carol Kachale | N02645210Y | Presenting |
+| 8 | Shoko Ezra | N02646251D | Build |
+| 9 | Kuzakwawo Lesean | N02653121A | Build |
+| 10 | Promise James | N02645998X | Build |
+| 11 | Taonashe Manyonga | N02646383W | Build |
+| 12 | Kuzhumbwa Tatenda | N02653651W | Writing |
+| 13 | Allan Mashuwa | N02641360C | Writing |
 
-Precious Memory Charamba  N02647137Y  Research
+## Research question
 
-Tawana Macheka          N02643436W  Presenting
+On a low-memory server replaying the Azure Functions 2021 trace, which page replacement policy (FIFO, LRU or Clock) causes the fewest page faults at the same RAM size?
 
-Carol Kachale          N02645210Y   Presenting
+## Aim
 
-Sibusisiwe Ndawana     N02649564C     Research
+To compare FIFO, LRU and Clock page replacement on a real serverless workload, and find out which one keeps the most useful functions in a limited amount of RAM.
 
-Shoko Ezra            N02646251D      Build
+## Objectives
 
-Kuzakwawo Lesean       N02653121A      Build
+1. Build a Python simulator that replays a list of function calls through FIFO, LRU and Clock with a fixed number of RAM slots.
+2. Run all three policies on the Azure Functions 2021 trace, treating each function as a page and each invocation as a page request, at RAM sizes of 1%, 5%, 10% and 25% of the distinct functions in the data.
+3. Evaluate by measuring the page-fault rate (faults ÷ invocations) and the hit rate (hits ÷ invocations) at each RAM size, with FIFO as the baseline. A policy succeeds if it cuts the fault rate by at least 10% (relative to FIFO) at 3 or more of the 4 RAM sizes. The best policy is the one that succeeds and has the lowest average fault rate.
 
-Promise James         N02645998x       Build
+## OS concept
 
-Rutendo Murambiwa     N02646586H     Research
+Virtual memory and page replacement. When RAM is full, the OS must choose which page to remove to make room for a new one. A bad choice causes another page fault, and a page fault means a slow trip to the disk.
 
-Elina Maraidza         N02646369M     Research
+## Why it matters
 
-Kuzhumbwa Tatenda     N02653651W      Writing
+Cloud servers cannot keep every function in RAM, so they must decide what to remove. Shahrad et al. (USENIX ATC 2020, "Serverless in the Wild: Characterizing and Optimizing the Serverless Workload at a Large Cloud Provider", Microsoft Azure) report that AWS and Azure keep idle functions in memory for a fixed 10 and 20 minutes, and that a fixed 2-hour window wastes almost 30% more memory than a 10-minute one. A small or student server has far less RAM, so a bad eviction choice hurts even more.
 
-Miracle Mazulu        N02644912Y      Research
+## Data
 
-Allan Mashuwa          N02641360C      Writing
+- **Dataset:** Azure Functions Invocation Trace 2021 (`AzureFunctionsInvocationTraceForTwoWeeksJan2021.rar`), Microsoft
+- **Link:** https://github.com/Azure/AzurePublicDataset/blob/master/AzureFunctionsInvocationTrace2021.md
+- **Year:** two weeks from 31 January 2021
+- **Licence:** CC-BY Attribution License, as written on the source page
+- **Citation:** Zhang et al., "Faster and Cheaper Serverless Computing on Harvested Resources", SOSP 2021
+- **Columns used (all 4):** `app`, `func`, `end_timestamp`, `duration`
+- **Why these columns:** together they give a real, ordered list of which functions were called and when. That is the stream of page requests a page-replacement policy needs.
+- **Privacy:** the app and function IDs are encrypted, so there is no personal data.
 
-Taonashe Manyonga     N02646383W       Build
+### Stand-in (proxy) and limits
 
-Research Question, Aim and Objectives
-*Question:* Which page replacement policy keeps the most useful pages in RAM and causes fewest page faults on a low-memory server running serverless functions?
+The trace has no memory sizes, so each app + func pair is treated as one equal-sized page, and RAM is a number of slots. The data cannot tell us real MB use, cold-start time or load cost, and the source page notes that the timestamps were modified from the production trace. Our result therefore shows how the policies behave on this workload only. It does not prove one policy is always best.
 
-Aim: To compare page replacement policies and identify the best policy for low-memory servers using real Azure Functions traces.
+## Method and what we will build
 
-Objectives
-1. To implement FIFO, LRU and Clock page replacement simulators in Python using the Azure Functions 2021 trace.
-2. To compare the policies on page faults and hit rate under different RAM sizes.
-3. To evaluate by measuring page fault rate, hit rate and memory usage, comparing against FIFO as baseline. Success = lowest page fault rate with stable performance at 50% and 25% RAM size.
+We will build a Python simulator that reads the trace, orders the calls by start time (`end_timestamp` minus `duration`), turns each function into a page ID, and replays the calls through FIFO, LRU and Clock on the same workload at each RAM size. We will **not** build a real operating system, only a simulator.
 
- OS Concept
-Virtual memory and page replacement. When RAM is full, the OS must choose which page to evict to disk to make room. A bad choice causes a page fault and slow disk access.
+**Output:** a table and line chart of fault rate against RAM size for the three policies, and a short write-up answering the research question.
 
- Why it matters, with a named public source:
-Serverless platforms like Microsoft Azure Functions run thousands of short functions on shared low-memory servers. If the OS evicts the wrong pages, functions slow down and cost more. According to Microsoft Azure's public Azure Functions dataset (AzurePublicDataset, 2021), real invocations are bursty and unpredictable, so the OS cannot just keep the most recent pages. A better replacement policy directly improves speed and cost for cloud providers in Zimbabwe and worldwide.
+**Tools (all free):** 7-Zip (to open the .rar), Python 3 with pandas and matplotlib, Excel (optional, for graphs), GitHub.
 
-Specific dataset and why we chose it
-Dataset:Azure Functions 2021 trace - `github.com/Azure/AzurePublicDataset` - `AzureFunctionsInvocationTrace2021`
-We chose it because it is public, from 2021 (meets the 2021-or-later rule), real-world not made-up, and it shows exactly how often functions are invoked, which we can turn into page requests for our simulator.
+## Team plan
 
-Method and what we will build:
-We will build a Python simulator that reads the trace, converts function invocations into a page-reference string, then runs FIFO, LRU and Clock on the same workload. We will test each policy at 100%, 50% and 25% RAM size. We will NOT build a real OS, only a simulator. Tools: Python, GitHub, Excel for graphs.
+Roles are in the table above. One small task per member, the weekly plan and meeting minutes are in [docs/team-plan.md](docs/team-plan.md). Every member commits under their own GitHub account.
 
- Team Plan
-Week 1: All - clean dataset + agree on page mapping. Week 2: Developer codes simulators, Analyst prepares test workloads. Week 3: Tester runs all tests, Leader checks results. Week 4: All - write report, update README, submit. We meet twice a week on WhatsApp + 1 physical meet. Every member must commit on GitHub under their own account.
+## Biggest risk and Plan B
 
- Biggest risk and Plan B
-Biggest Risk:The Azure trace is too large / too messy to parse and our simulator runs too slowly.
-Plan B: Use a 1-day sample (e.g. 1 million rows) instead of the full 14 days, and if Python is still slow, use a smaller synthetic trace that follows the same pattern, and state this clearly in the report
+**Risk:** the Azure trace is too large or too messy to read, and the simulator runs too slowly on a laptop.
+
+**Plan B:** use a 1-day sample (for example the first 1 million rows) instead of the full 14 days. If Python is still too slow, use a smaller synthetic trace that follows the same pattern, and say so clearly in the report.
