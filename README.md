@@ -28,7 +28,7 @@ On a low-memory server replaying the Azure Functions 2021 trace, which page repl
 
 ## Aim
 
-To compare FIFO, LRU and Clock page replacement on a real serverless workload, and find out which one keeps the most useful functions in a limited amount of RAM.
+To compare FIFO(First In ,First Out), LRU (Least Recently Used) and Clock page replacement on a real serverless workload, and find out which one keeps the most useful functions in a limited amount of RAM.
 
 ## Objectives
 
@@ -42,7 +42,7 @@ Virtual memory and page replacement. When RAM is full, the OS must choose which 
 
 ## Why it matters
 
-Cloud servers cannot keep every function in RAM, so they must decide what to remove. Shahrad et al. (USENIX ATC 2020, "Serverless in the Wild: Characterizing and Optimizing the Serverless Workload at a Large Cloud Provider", Microsoft Azure) report that AWS and Azure keep idle functions in memory for a fixed 10 and 20 minutes, and that a fixed 2-hour window wastes almost 30% more memory than a 10-minute one. A small or student server has far less RAM, so a bad eviction choice hurts even more.
+Cloud servers cannot keep every function in RAM(Random Acess Memory), so they must decide what to remove. Shahrad et al. (USENIX ATC 2020, "Serverless in the Wild: Characterizing and Optimizing the Serverless Workload at a Large Cloud Provider", Microsoft Azure) report that AWS and Azure keep idle functions in memory for a fixed 10 and 20 minutes, and that a fixed 2-hour window wastes almost 30% more memory than a 10-minute one. A small or student server has far less RAM, so a bad eviction choice hurts even more.
 
 ## Data
 
