@@ -71,5 +71,5 @@ We will build a Python simulator that reads the trace, orders the calls by start
 
 Roles are in the table above. One small task per member, the weekly plan and meeting minutes are in [docs/team-plan.md](docs/team-plan.md). Every member commits under their own GitHub account.
 
-## Biggest risk and Plan B
+
 
