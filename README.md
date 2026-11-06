@@ -14,7 +14,7 @@ Tawana Macheka          N02643436W  Presenting
 
 Carol Kachale          N02645210Y   Presenting
 
-Sibusisiwe Ndowana     N02649564C     Research
+Sibusisiwe Ndawana     N02649564C     Research
 
 Shoko Ezra            N02646251D      Build
 
