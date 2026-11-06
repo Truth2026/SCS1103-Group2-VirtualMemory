@@ -1,4 +1,4 @@
-# What Stays in RAM? Page Replacement for a Low-Memory Server
+7# What Stays in RAM? Page Replacement for a Low-Memory Server
 
 **SCS 1103 Operating System Concepts, Assignment 1 | Group 2**
 
@@ -36,9 +36,6 @@ To compare FIFO(First In ,First Out), LRU (Least Recently Used) and Clock page r
 2. Run all three policies on the Azure Functions 2021 trace, treating each function as a page and each invocation as a page request, at RAM sizes of 1%, 5%, 10% and 25% of the distinct functions in the data.
 3. Evaluate by measuring the page-fault rate (faults ÷ invocations) and the hit rate (hits ÷ invocations) at each RAM size, with FIFO as the baseline. A policy succeeds if it cuts the fault rate by at least 10% (relative to FIFO) at 3 or more of the 4 RAM sizes. The best policy is the one that succeeds and has the lowest average fault rate.
 
-## OS concept
-
-Virtual memory and page replacement. When RAM is full, the OS must choose which page to remove to make room for a new one. A bad choice causes another page fault, and a page fault means a slow trip to the disk.
 
 ## Why it matters
 
