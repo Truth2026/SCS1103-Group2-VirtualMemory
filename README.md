@@ -22,7 +22,7 @@ https://github.com/n02646251d-png/SCS1103-Group2-VirtualMemory
 | 12 | Kuzhumbwa Tatenda | N02653651W | Writing |
 | 13 | Allan Mashuwa | N02641360C | Writing |
 
-## Research question
+##Research question
 
 On a low-memory server replaying the Azure Functions 2021 trace, which page replacement policy (FIFO, LRU or Clock) causes the fewest page faults at the same RAM size?
 
