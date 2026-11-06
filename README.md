@@ -65,7 +65,6 @@ We will build a Python simulator that reads the trace, orders the calls by start
 
 **Output:** a table and line chart of fault rate against RAM size for the three policies, and a short write-up answering the research question.
 
-**Tools (all free):** 7-Zip (to open the .rar), Python 3 with pandas and matplotlib, Excel (optional, for graphs), GitHub.
 
 ## Team plan
 
