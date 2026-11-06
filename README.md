@@ -74,5 +74,3 @@ Roles are in the table above. One small task per member, the weekly plan and mee
 ## Biggest risk and Plan B
 
 **Risk:** the Azure trace is too large or too messy to read, and the simulator runs too slowly on a laptop.
-
-**Plan B:** use a 1-day sample (for example the first 1 million rows) instead of the full 14 days. If Python is still too slow, use a smaller synthetic trace that follows the same pattern, and say so clearly in the report.
