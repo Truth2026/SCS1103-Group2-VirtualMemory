@@ -73,4 +73,3 @@ Roles are in the table above. One small task per member, the weekly plan and mee
 
 ## Biggest risk and Plan B
 
-**Risk:** the Azure trace is too large or too messy to read, and the simulator runs too slowly on a laptop.
