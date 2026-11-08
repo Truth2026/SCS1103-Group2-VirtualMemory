@@ -37,35 +37,3 @@ To compare FIFO(First In ,First Out), LRU (Least Recently Used) and Clock page r
 3. Evaluate by measuring the page-fault rate (faults ÷ invocations) and the hit rate (hits ÷ invocations) at each RAM size, with FIFO as the baseline. A policy succeeds if it cuts the fault rate by at least 10% (relative to FIFO) at 3 or more of the 4 RAM sizes. The best policy is the one that succeeds and has the lowest average fault rate.
 
 
-## Why it matters
-
-Cloud servers cannot keep every function in RAM(Random Acess Memory), so they must decide what to remove. Shahrad et al. (USENIX ATC 2020, "Serverless in the Wild: Characterizing and Optimizing the Serverless Workload at a Large Cloud Provider", Microsoft Azure) report that AWS and Azure keep idle functions in memory for a fixed 10 and 20 minutes, and that a fixed 2-hour window wastes almost 30% more memory than a 10-minute one. A small or student server has far less RAM, so a bad eviction choice hurts even more.
-
-## Data
-
-- **Dataset:** Azure Functions Invocation Trace 2021 (`AzureFunctionsInvocationTraceForTwoWeeksJan2021.rar`), Microsoft
-- **Link:** https://github.com/Azure/AzurePublicDataset/blob/master/AzureFunctionsInvocationTrace2021.md
-- **Year:** two weeks from 31 January 2021
-- **Licence:** CC-BY Attribution License, as written on the source page
-- **Citation:** Zhang et al., "Faster and Cheaper Serverless Computing on Harvested Resources", SOSP 2021
-- **Columns used (all 4):** `app`, `func`, `end_timestamp`, `duration`
-- **Why these columns:** together they give a real, ordered list of which functions were called and when. That is the stream of page requests a page-replacement policy needs.
-- **Privacy:** the app and function IDs are encrypted, so there is no personal data.
-
-### Stand-in (proxy) and limits
-
-The trace has no memory sizes, so each app + func pair is treated as one equal-sized page, and RAM is a number of slots. The data cannot tell us real MB use, cold-start time or load cost, and the source page notes that the timestamps were modified from the production trace. Our result therefore shows how the policies behave on this workload only. It does not prove one policy is always best.
-
-## Method and what we will build
-
-We will build a Python simulator that reads the trace, orders the calls by start time (`end_timestamp` minus `duration`), turns each function into a page ID, and replays the calls through FIFO, LRU and Clock on the same workload at each RAM size. We will **not** build a real operating system, only a simulator.
-
-**Output:** a table and line chart of fault rate against RAM size for the three policies, and a short write-up answering the research question.
-
-
-## Team plan
-
-Roles are in the table above. One small task per member, the weekly plan and meeting minutes are in [docs/team-plan.md](docs/team-plan.md). Every member commits under their own GitHub account.
-
-
-
