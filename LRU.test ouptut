@@ -1,0 +1,12 @@
+RAM: [1, 2]                         3 : MISS                            RAM: [1, 2, 3]
+1 : HIT
+RAM: [2, 3, 1]
+4 : MISS
+RAM: [3, 1, 4]
+2 : MISS
+RAM: [1, 4, 2]
+5 : MISS
+RAM: [4, 2, 5]
+--------------------
+Total Hits: 1
+Total Page Faults: 6
